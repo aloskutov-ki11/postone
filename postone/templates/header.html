@@ -1,0 +1,49 @@
+{% load staticfiles %}
+<div class="container" style="margin-top: 70px;">
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li {% if cur_cat.url_name == "main" %} class="active" {% endif %}><a href="/">Главная <span class="sr-only">(current)</span></a></li>
+            <li><a href="/about">О нас</a></li>
+
+            <!-- Строительство -->
+            <li class="dropdown {% if cur_cat.url_name == "building" %} active {% endif %} ">
+              <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Строительство <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                {% for sub_cat in building_sub_cat_list %}
+                    <li><a href="/building/{{ sub_cat.url_name }}/">{{ sub_cat.name }}</a></li>
+                {% endfor %}
+              </ul>
+            </li>
+
+            <!-- Отделка -->
+            <li class="dropdown {% if cur_cat.url_name == "furnish" %} active {% endif %}">
+              <a href="/furnish/" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Отделка <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                {% for sub_cat in furnish_sub_cat_list %}
+                    <li><a href="/furnish/{{ sub_cat.url_name }}/">{{ sub_cat.name }}</a></li>
+                {% endfor %}
+              </ul>
+            </li>
+            <li {% if cur_cat.url_name == "gallery" %} class="active" {% endif %}>
+                <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Галерея <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="/gallery/building/">Портфолио "Строительство"</a></li>
+                    <li><a href="/gallery/furnish/">Портфолио "Отделка"</a></li>
+              </ul>
+            </li>
+            <li {% if cur_cat.url_name == "price" %} class="active" {% endif %}><a href="/price">Прайс</a></li>
+            <li {% if cur_cat.url_name == "special_tech" %} class="active" {% endif %}><a href="/special-equipment">Спецтехника</a></li>
+            <li {% if cur_cat.url_name == "contacts" %} class="active" {% endif %}><a href="/contacts">Контакты</a></li>
+          </ul>
+
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+</div>
+
+
