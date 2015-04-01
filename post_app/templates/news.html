@@ -1,0 +1,29 @@
+{% load staticfiles %}
+{% load thumbnail %}
+{% for cur_news in object_list %}
+    <h3>{{ cur_news.title }}<br/>
+        <small>{{ cur_news.pub_date }}</small>
+    </h3>
+    <p>{{ cur_news.content }}</p>
+    <div class="content-block-images">
+        <div class="row">
+            {% for photo in cur_news.newsphotos_set.all %}
+                <div class="col-xs-3">
+                    <a href="#" class="thumbnail">
+                        {% thumbnail photo.image "200x200" crop="center" as im %}
+                            <img src="{{ im.url }}">
+                        {% endthumbnail %}
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% if forloop.last %}
+    <p id="news-link-more" class="text-center">
+        <a OnClick="LoadMore('#firstTabContent', '#news-link-more', 'news', {{ object_list_offset }}, 1);">Еще
+            новости <span class="caret"></span></a>
+    </p>
+    {% endif %}
+    {% empty %}
+    <h2>Новостей больше нет</h2>
+{% endfor %}

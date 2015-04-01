@@ -1,0 +1,314 @@
+﻿{% load staticfiles %}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Пост №1</title>
+
+    <link href="/static/content/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/static/content/css/default.css" rel="stylesheet"/>
+
+    <script src="/static/js/jquery-2.1.3.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/default.js"></script>
+
+
+    <script>
+    $( document ).ready(function() {
+        $('#firstTablist div div').click(function (e) {
+            $("#firstTablist div div[class*='menu-element active']").removeClass("active");
+            $(this).addClass("active");
+
+
+            var news = $.post( "example.php")
+
+            news.done(function( data ) {
+                $("#firstTabContent").empty().append( data );
+            });
+            news.fail(function(  ) {
+                 alert("fail");
+            });
+        })
+
+    });
+
+    function LoadMore(TabContent, LinkMore, url, offset, limit) {
+        var list = $.get( "/" + url + "/?offset=" + offset + "&limit=" + limit);
+
+        list.done(function( data ) {
+            $(TabContent).append(data);
+            $(LinkMore).remove();
+        });
+        list.fail(function(  ) {
+              alert("fail");
+        });
+    }
+
+    </script>
+
+</head>
+<body>
+<div class="main-container">
+    <nav class="navbar navbar-default navbar-fixed-top navbar-top">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-6 col-xs-offset-3">
+                    <div id="navbar">
+                        <ul class="nav navbar-nav">
+                            <li class="active"><a
+                                    href="#block-events">события</a></li>
+                            <li><a href="#block-guard">караул</a></li>
+                            <li><a href="#block-about">о проекте</a></li>
+                            <li><a href="#block-link">ресурсы</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <img class="static-logo" src="/static/content/img/site-01_02.png"
+             style="top: 0; left: 50px;"/>
+        <img class="static-logo" src="/static/content/img/site-01_03.png"
+             style="top: 15px; right: 50px;"/>
+    </nav>
+
+    {% block slider %}
+        {% include 'slider.html' %}
+    {% endblock %}
+
+    <div id="block-events" class="content-block">
+        <nav class="navbar-menu">
+            <div class="container">
+                <div class="row" id="firstTablist">
+                    <div class="col-xs-3">
+                        <div class="menu-element active">
+                            <div class="arrow"></div>
+                            <img class="menu-element-icon"
+                                 src="/static/content/img/site-01_15.png"/>
+                            новости
+                        </div>
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="menu-element">
+                            <div class="arrow"></div>
+                            <img class="menu-element-icon"
+                                 src="/static/content/img/site-01_09.png"/>
+                            галерея
+                        </div>
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="menu-element">
+                            <div class="arrow"></div>
+                            <img class="menu-element-icon"
+                                 src="/static/content/img/site-01_12.png"/>
+                            трансляция
+                        </div>
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="menu-element">
+                            <div class="arrow"></div>
+                            <img class="menu-element-icon"
+                                 src="/static/content/img/site-01_06.png"/>
+                            отзывы
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        {% block firstTabContent %}
+            <div class="content-block-inner">
+                <div class="container" id="firstTabContent">
+                    {% include 'news.html' with object_list=news object_list_offset=news_offset %}
+                </div>
+            </div>
+        {% endblock %}
+
+        <div id="block-guard" class="content-block">
+            <nav class="navbar-menu">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <div class="menu-element active">
+                                <div class="arrow"></div>
+                                <img class="menu-element-icon"
+                                     src="/static/content/img/site-01_25.png"/>
+                                расписание
+                            </div>
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="menu-element">
+                                <div class="arrow"></div>
+                                <img class="menu-element-icon"
+                                     src="/static/content/img/site-01_28.png"/>
+                                список караула
+                            </div>
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="menu-element">
+                                <div class="arrow"></div>
+                                <img class="menu-element-icon"
+                                     src="/static/content/img/site-01_31.png"/>
+                                поиск
+                            </div>
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="widget-weather">
+                                <div class="date">Понедельник, 13 февраля</div>
+                                <div class="weather"><img
+                                        src="/static/content/img/site-01_34.png"/>
+                                    10° С, 4 м/с
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            {% block schedule %}
+                {% include 'schedule.html' %}
+            {% endblock %}
+
+        </div>
+
+        <div id="block-about" class="content-block">
+            <nav class="navbar-menu">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <div class="menu-element active">
+                                <div class="arrow"></div>
+                                <img class="menu-element-icon"
+                                     src="/static/content/img/site-01_43.png"/>
+                                о проекте
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="menu-element">
+                                <div class="arrow"></div>
+                                <img class="menu-element-icon"
+                                     src="/static/content/img/site-01_41.png"/>
+                                документы
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="menu-element">
+                                <div class="arrow"></div>
+                                <img class="menu-element-icon"
+                                     src="/static/content/img/site-01_46.png"/>
+                                контакты
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="content-block-inner">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <p class="lead">Пост №1 – это комплекс
+                                военно-патриотических мероприятий для учащихся
+                                образовательных учреждений, расположенных в
+                                городе Красноярске.</p>
+
+                            <p>Подготовка к несению почетной караульной службы
+                                позволяет развить у кандидатов в постовцы
+                                дисциплинированность, терпение, стремление
+                                достигать поставленные перед собой задачи.</p>
+
+                            <p>Перед тем, как заступить в почетный караул,
+                                каждый постовец дает «Торжественное обещание» -
+                                высокий патриотический акт
+                                проявления воли и принятия на себя
+                                ответственности.</p>
+
+                            <p>В почетном карауле участвуют 20 учащихся
+                                ежедневно. Вахта будет длиться 4 часа в течение
+                                одного дня (с 10:00 до 14:00),
+                                со сменами караула через каждые 10-15 минут.
+                                Постовцы обеспечиваются единой униформой в
+                                течение несения Вахты за которую они несут
+                                ответственность.</p>
+                        </div>
+                        <div class="col-xs-6">
+                            <p>Каждый постовец сдает зачет по следующим
+                                дисциплинам: строевая подготовка, Устав
+                                караульной службы и строевой Устав,
+                                сборка-разборка автомата Калашникова.</p>
+
+                            <p>Во время нахождения ребят на Посту №1 с ними
+                                проводится организационная работа. Это
+                                проведение инструктажа по правилам техники
+                                безопасности, и организация несения службы
+                                на Посту №1, тренировочные занятия по строевой
+                                подготовке
+                                и получения обмундирования, что имеет большое
+                                значение для поддержания дисциплины.</p>
+
+                            <p>На Посту №1 проводятся образовательные программы,
+                                встречи с ветеранами участниками боевых
+                                действий, интересными людьми, экскурсий по
+                                местам боевой славы, значимым местам города и
+                                края, бывшими часовыми Поста №1, уроки мужества,
+                                военно-спортивные соревнования.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="block-link" class="content-block">
+            <nav class="navbar-menu">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <div class="menu-element active">
+                                <div class="arrow"></div>
+                                ресурсы
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="content-block-inner">
+                <div class="container">
+                    <p><a href="www.pensiya.ru">www.pensiya.ru</a> - удобный и
+                        быстрый рассчет будущей пенсии</p>
+
+                    <p><a href="www.kommunalka.ru">www.kommunalka.ru</a> -
+                        оплата любым коммунальных платежей через Интернет</p>
+
+                    <p><a href="www.pensiya.ru">www.pensiya.ru</a> - удобный и
+                        быстрый рассчет будущей пенсии</p>
+
+                    <p><a href="www.kommunalka.ru">www.kommunalka.ru</a> -
+                        оплата любым коммунальных платежей через Интернет</p>
+
+                    <p><a href="www.pensiya.ru">www.pensiya.ru</a> - удобный и
+                        быстрый рассчет будущей пенсии</p>
+
+                    <p><a href="www.kommunalka.ru">www.kommunalka.ru</a> -
+                        оплата любым коммунальных платежей через Интернет</p>
+
+                    <p><a href="www.pensiya.ru">www.pensiya.ru</a> - удобный и
+                        быстрый рассчет будущей пенсии</p>
+
+                    <p><a href="www.kommunalka.ru">www.kommunalka.ru</a> -
+                        оплата любым коммунальных платежей через Интернет</p>
+
+                    <p class="text-center">
+                        <a href="#">Посмотреть еще <span
+                                class="caret"></span></a>
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+        <footer class="footer text-center"><span>© 2015 Пост №1</span></footer>
+
+    </div>
+</body>
+</html>

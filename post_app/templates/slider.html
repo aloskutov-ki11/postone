@@ -1,0 +1,36 @@
+{% load thumbnail %}
+<div class="container">
+    <div id="carousel" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            {% for slide in slider %}
+                {% if forloop.first %}
+                    <li data-target="#carousel" data-slide-to="0"
+                        class="active"></li>
+                {% else %}
+                    <li data-target="#carousel"
+                        data-slide-to="{{ forloop.counter0 }}"></li>
+                {% endif %}
+            {% endfor %}
+        </ol>
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner" role="listbox">
+            {% for slide in slider %}
+                {% if forloop.first %}
+                    <div class="item active">
+                {% else %}
+                    <div class="item">
+                {% endif %}
+            {% thumbnail slide.image "1024x500" crop="center" as im %}
+                <img src="{{ im.url }}">
+            {% endthumbnail %}
+            <div class="carousel-caption">
+                {{ slide.title }}
+            </div>
+            </div>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,16 +1,11 @@
+# -*- coding: utf-8 -*-
 from django.db import models
-
-# Create your models here.
-
-from postone.settings import PHOTO_SIZE_BIG, PHOTO_SIZE_SMALL, UPLOAD_PHOTO_BIG_PATH, UPLOAD_PHOTO_SMALL_PATH
-from PIL import Image
-from django.core.files.storage import FileSystemStorage
 
 
 class Slider(models.Model):
     title = models.TextField(verbose_name="Описание изображения")
-    img = models.ImageField(storage=FileSystemStorage(location=UPLOAD_PHOTO_PATH), null=True)
-    order = models.IntegerField(null=True, blank=True, verbose_name="Порядок в очереди")
+    image = models.ImageField(verbose_name="Изображение")
+    order = models.IntegerField(blank=True, verbose_name="Порядок в очереди")
 
     def __str__(self):
         return self.title
@@ -37,12 +32,12 @@ class News(models.Model):
     class Meta:
         verbose_name = "Новость"
         verbose_name_plural = "Новости"
+        ordering = ['-pub_date']
 
 
 class NewsPhotos(models.Model):
     news = models.ForeignKey(News)
-    photo_bg = models.ImageField(storage=FileSystemStorage(location=UPLOAD_PHOTO_BIG_PATH), null=True, verbose_name="Фотография")
-    photo_sm = models.ImageField(storage=FileSystemStorage(location=UPLOAD_PHOTO_SMALL_PATH), null=True, verbose_name="Превью", blank=True)
+    image = models.ImageField(verbose_name="Фотография")
 
     class Meta:
         verbose_name = "Фотография для новости"
@@ -50,8 +45,7 @@ class NewsPhotos(models.Model):
 
 
 class GalleryPhotos(models.Model):
-    photo_bg = models.ImageField(storage=FileSystemStorage(location=UPLOAD_PHOTO_BIG_PATH), null=True, verbose_name="Фотография")
-    photo_sm = models.ImageField(storage=FileSystemStorage(location=UPLOAD_PHOTO_SMALL_PATH), null=True, verbose_name="Превью", blank=True)
+    image = models.ImageField(verbose_name="Фотография")
 
     class Meta:
         verbose_name = "Фотография для галереи"
@@ -59,26 +53,29 @@ class GalleryPhotos(models.Model):
 
 
 class Translation(models.Model):
-    video_url = models.TextField(max_length=255, verbose_name="YouTube-ссылка")
+    video_url = models.CharField(max_length=255, verbose_name="YouTube-ссылка")
 
     def __str__(self):
-        return self.video_id
+        return self.video_url
 
     def __unicode__(self):
-        return self.video_id
+        return self.video_url
+
+    class Meta:
+        verbose_name = "YouTube-ссылка"
+        verbose_name_plural = "YouTube-ссылки"
 
 
 class Review(models.Model):
     author_name = models.CharField(max_length=256, verbose_name="Автор")
     pub_date = models.DateField(verbose_name="Дата публикации")
     content = models.TextField(verbose_name="Содержание")
-    is_published = models.BooleanField(default=False, verbose_name="Опубликовать на сайте?")
 
     def __str__(self):
-        return self.title
+        return self.author_name
 
     def __unicode__(self):
-        return self.title
+        return self.author_name
 
     class Meta:
         verbose_name = "Отзыв"

@@ -36,6 +36,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'sorl.thumbnail',
+    'post_app',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -66,9 +68,10 @@ DATABASES = {
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+LANGUAGE_CODE = 'ru-ru'
+
+TIME_ZONE = 'Asia/Krasnoyarsk'
 
 USE_I18N = True
 
@@ -80,14 +83,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'postone/static/'),
+    os.path.join(BASE_DIR, 'post_app/static/'),
+)
 STATIC_URL = '/static/'
 
 
 PHOTO_SIZE_BIG = (1000, 800)
 PHOTO_SIZE_SMALL = (300, 150)
 
-UPLOAD_PHOTO_BIG_PATH = os.path.join(os.path.dirname(__file__), 'static/uploaded/photos/').replace('\\','/')
-UPLOAD_PHOTO_SMALL_PATH = os.path.join(os.path.dirname(__file__), 'static/uploaded/photos/small/').replace('\\','/')
-
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 from .settings_local import *
