@@ -4,6 +4,7 @@ from adminsortable.models import Sortable
 from django.dispatch import receiver
 import os
 from django.db.models.signals import pre_save, post_save, pre_delete
+import datetime
 
 
 class Slider(Sortable):
@@ -164,6 +165,12 @@ class GuardGroupScheduleItem(models.Model):
     time = models.TimeField(verbose_name="Время начала")
     group = models.ForeignKey(GuardGroup, verbose_name="Группа")
 
+    def is_active(self):
+        now = datetime.datetime.now().time()
+        cur = self.objects.filter(time__lte=now)[:-1]
+        return self == cur
+
+
     def __str__(self):
         return self.title
 
@@ -173,7 +180,7 @@ class GuardGroupScheduleItem(models.Model):
     class Meta:
         verbose_name = "Событие"
         verbose_name_plural = "События"
-        ordering = ['time']
+        ordering = ('time', )
 
 
 class Person(models.Model):

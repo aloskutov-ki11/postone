@@ -64,6 +64,13 @@ class GuardGroupAdminClass(admin.ModelAdmin):
     inlines = [GuardGroupScheduleItemInline]
 
 
+class PersonAdminClass(admin.ModelAdmin):
+    raw_id_fields = ('rewards', )
+    autocomplete_lookup_fields = {
+        'm2m': ['rewards'],
+    }
+
+
 admin.site.register(GalleryPhotos)
 admin.site.register(News, NewsAdminClass)
 admin.site.register(GuardGroup, GuardGroupAdminClass)
@@ -74,7 +81,7 @@ admin.site.register(Review, ReviewAdminClass)
 admin.site.register(Document)
 admin.site.register(Resource)
 
-admin.site.register(Person)
+admin.site.register(Person, PersonAdminClass)
 admin.site.register(Reward)
 
 admin.site.unregister(User)
