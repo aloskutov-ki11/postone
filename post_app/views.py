@@ -27,7 +27,6 @@ class IndexView(TemplateView):
         context['resources_more_button_label'] = u'Ещё ресурсы'
         context['resources_tab_id'] = 'fourth'
 
-        context['cur_time'] = datetime.now().time()
         context['guard_groups'] = GuardGroup.objects.all()
 
         return context
@@ -93,13 +92,6 @@ class ResourceView(PaginationMixin, ListView):
     tab_id = 'fourth'
 
 
-class GuardGroupView(TemplateView):
+class GuardGroupView(ListView):
     template_name = 'schedule.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(GuardGroupView, self).get_context_data(**kwargs)
-        context['guard_groups'] = GuardGroup.objects.all()
-
-        context['cur_time'] = datetime.now().time()
-
-        return context
+    queryset = GuardGroup.objects.all()

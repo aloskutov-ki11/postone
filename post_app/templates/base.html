@@ -186,7 +186,7 @@
             <div class="content-block-inner">
                 <div class="container" id="secondTabContent">
                     {% block secondTabContent %}
-                        {% include 'schedule.html' %}
+                        {% include 'schedule.html' with object_list=guard_groups %}
                     {% endblock %}
                 </div>
             </div>

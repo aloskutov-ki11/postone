@@ -1,22 +1,18 @@
 <div class="submenu">
-    {% for group in guard_groups %}
+    {% for group in object_list %}
         <a data-table-id="#group-table-{{ group.pk }}">{{ group.name }}</a>
     {% endfor %}
 </div>
-    
-{% for group in guard_groups %}
-        {% if forloop.first %}
-            <table  id="group-table-{{ group.pk }}" class="table table-hover table-schedule">
-        {% else %}
-            <table style="display: none;"  id="group-table-{{ group.pk }}" class="table table-hover table-schedule">
-        {% endif %}
-            <tbody>
-                {% for event in group.guardgroupscheduleitem_set.all %}
-                <tr {% if event.is_active %} class="active" {% endif %}  >
-                    <td>{{ event.time|time:"H:i" }}</td>
-                    <td>{{ event.title }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+
+{% for group in object_list %}
+    <table {% if not forloop.first %} style="display: none;" {% endif %}id="group-table-{{ group.pk }}" class="table table-hover table-schedule">
+        <tbody>
+        {% for event in group.guardgroupscheduleitem_set.all %}
+            <tr{% if event.is_active %} class="active" {% endif %}>
+                <td>{{ event.time|time:"H:i" }}</td>
+                <td>{{ event.title }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endfor %}

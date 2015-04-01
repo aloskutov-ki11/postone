@@ -158,6 +158,7 @@ class GuardGroup(models.Model):
     class Meta:
         verbose_name = "Группа"
         verbose_name_plural = "Группы"
+        ordering = ('name', )
 
 
 class GuardGroupScheduleItem(models.Model):
@@ -167,9 +168,13 @@ class GuardGroupScheduleItem(models.Model):
 
     def is_active(self):
         now = datetime.datetime.now().time()
-        cur = self.objects.filter(time__lte=now)[:-1]
+        try:
+            cur = GuardGroupScheduleItem.objects.filter(time__lte=now,
+                                                    group=self.group).reverse()[0]
+        except IndexError:
+            # на случай между 00:00 и первым событием
+            cur = GuardGroupScheduleItem.objects.filter(group=self.group)[0]
         return self == cur
-
 
     def __str__(self):
         return self.title
