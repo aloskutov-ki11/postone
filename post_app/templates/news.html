@@ -1,13 +1,14 @@
+{% extends 'pagination.html' %}
 {% load staticfiles %}
 {% load thumbnail %}
-{% for cur_news in object_list %}
-    <h3>{{ cur_news.title }}<br/>
-        <small>{{ cur_news.pub_date }}</small>
+{% block list_item %}
+    <h3>{{ cur_object.title }}<br/>
+        <small>{{ cur_object.pub_date }}</small>
     </h3>
-    <p>{{ cur_news.content }}</p>
+    <p>{{ cur_object.content }}</p>
     <div class="content-block-images">
         <div class="row">
-            {% for photo in cur_news.newsphotos_set.all %}
+            {% for photo in cur_object.newsphotos_set.all %}
                 <div class="col-xs-3">
                     <a href="#" class="thumbnail">
                         {% thumbnail photo.image "200x200" crop="center" as im %}
@@ -18,10 +19,4 @@
             {% endfor %}
         </div>
     </div>
-    {% if forloop.last %}
-    <p id="news-link-more" class="text-center">
-        <a data-tab-content="#firstTabContent" data-link-more="#news-link-more" data-url="{{ data_utl }}" data-offset="{{ object_list_offset }}" data-limit="{{ object_list_offset }}">Еще
-            новости <span class="caret"></span></a>
-    </p>
-    {% endif %}
-{% endfor %}
+{% endblock %}

@@ -1,0 +1,11 @@
+{% load staticfiles %}
+{% load thumbnail %}
+{% for cur_object in object_list %}
+    {% block list_item %}
+    {% endblock %}
+    {% if forloop.last %}
+        <p id={{ more_button_id }} class="text-center">
+        <a data-tab-content="#{{ tab_id }}TabContent" data-link-more="#{{ more_button_id }}" data-url="{{ data_url }}" data-offset="{{ object_list_offset }}" data-limit="{{ default_list_limit }}">{{ more_button_label }}<span class="caret"></span></a>
+    </p>
+    {% endif %}
+{% endfor %}
