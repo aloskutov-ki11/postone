@@ -15,9 +15,7 @@
 
     <script>
     $( document ).ready(function() {
-
-        $("div[class*='row'] div[class*='col-xs-3'] div[class*='menu-element']").click(function (e) {
-
+        $("div[class*='row'] div[class*='col-xs-3'] div[class*='menu-element'], div[class*='row'] div[class*='col-xs-4'] div[class*='menu-element']").click(function (e) {
             var TabList = $(this).data('tabList');
             var tabContent = $(this).data('tabContent');
             var url = $(this).data('url');
@@ -27,7 +25,9 @@
             $(TabList+" div div[class*='menu-element active']").removeClass("active");
             $(this).addClass("active");
 
+
             var list = $.get( "/" + url + "/?offset=" + offset + "&limit=" + limit);
+
 
             list.done(function( data ) {
                 $(tabContent).empty().append( data );
@@ -36,29 +36,25 @@
                  $(tabContent).empty();
             });
         })
-
-
-
     });
 
-               $(document).delegate("p[class*='text-center'] a", 'click', function (e) {
+    $(document).delegate("p[class*='text-center'] a", 'click', function (e) {
+        var tabContent = $(this).data('tabContent');
+        var linkMore = $(this).data('linkMore');
+        var url = $(this).data('url');
+        var offset = $(this).data('offset');
+        var limit = $(this).data('limit');
 
-                    var tabContent = $(this).data('tabContent');
-                    var linkMore = $(this).data('linkMore');
-                    var url = $(this).data('url');
-                    var offset = $(this).data('offset');
-                    var limit = $(this).data('limit');
+        var list = $.get( "/" + url + "/?offset=" + offset + "&limit=" + limit);
 
-                    var list = $.get( "/" + url + "/?offset=" + offset + "&limit=" + limit);
-                    //alert("s");
-                    list.done(function( data ) {
-                        $(tabContent).append( data );
-                        $(linkMore).remove();
-                    });
-                    list.fail(function(  ) {
-                         $(tabContent).empty();
-                    });
-                })
+        list.done(function( data ) {
+        $(tabContent).append( data );
+            $(linkMore).remove();
+        });
+        list.fail(function(  ) {
+            $(tabContent).empty();
+        });
+    })
     </script>
 
 </head>
@@ -134,7 +130,7 @@
         {% block firstTabContent %}
             <div class="content-block-inner">
                 <div class="container" id="firstTabContent">
-                    {% include 'news.html' with object_list=news object_list_offset=news_offset %}
+                    {% include 'news.html' with object_list=news object_list_offset=news_offset data_url=news_url default_list_limit=news_list_limit more_button_id=news_more_button_id more_button_label=news_more_button_label tab_id=news_tab_id%}
                 </div>
             </div>
         {% endblock %}
@@ -142,9 +138,9 @@
         <div id="block-guard" class="content-block">
             <nav class="navbar-menu">
                 <div class="container">
-                    <div class="row">
+                    <div class="row" id="secondTablist">
                         <div class="col-xs-3">
-                            <div class="menu-element active">
+                            <div data-tab-list="#secondTablist" data-tab-content="#secondTabContent" data-url="schelude" class="menu-element active">
                                 <div class="arrow"></div>
                                 <img class="menu-element-icon"
                                      src="/static/content/img/site-01_25.png"/>
@@ -152,7 +148,7 @@
                             </div>
                         </div>
                         <div class="col-xs-3">
-                            <div class="menu-element">
+                            <div data-tab-list="#secondTablist" data-tab-content="#secondTabContent" data-url="guard" class="menu-element">
                                 <div class="arrow"></div>
                                 <img class="menu-element-icon"
                                      src="/static/content/img/site-01_28.png"/>
@@ -160,7 +156,7 @@
                             </div>
                         </div>
                         <div class="col-xs-3">
-                            <div class="menu-element">
+                            <div data-tab-list="#secondTablist" data-tab-content="#secondTabContent" data-url="search" class="menu-element">
                                 <div class="arrow"></div>
                                 <img class="menu-element-icon"
                                      src="/static/content/img/site-01_31.png"/>
@@ -180,18 +176,22 @@
                 </div>
             </nav>
 
-            {% block schedule %}
-                {% include 'schedule.html' %}
-            {% endblock %}
+            <div class="content-block-inner">
+                <div class="container" id="secondTabContent">
+                    {% block secondTabContent %}
+                        {% include 'schedule.html' %}
+                    {% endblock %}
+                </div>
+            </div>
 
         </div>
 
         <div id="block-about" class="content-block">
             <nav class="navbar-menu">
                 <div class="container">
-                    <div class="row">
+                    <div class="row" id="thirdTablist">
                         <div class="col-xs-4">
-                            <div class="menu-element active">
+                            <div data-tab-list="#thirdTablist" data-tab-content="#thirdTabContent" data-url="about" data-offset="0" data-limit="1" class="menu-element active" class="menu-element active">
                                 <div class="arrow"></div>
                                 <img class="menu-element-icon"
                                      src="/static/content/img/site-01_43.png"/>
@@ -199,7 +199,7 @@
                             </div>
                         </div>
                         <div class="col-xs-4">
-                            <div class="menu-element">
+                            <div data-tab-list="#thirdTablist" data-tab-content="#thirdTabContent" data-url="documents" data-offset="0" data-limit="1" class="menu-element">
                                 <div class="arrow"></div>
                                 <img class="menu-element-icon"
                                      src="/static/content/img/site-01_41.png"/>
@@ -207,7 +207,7 @@
                             </div>
                         </div>
                         <div class="col-xs-4">
-                            <div class="menu-element">
+                            <div data-tab-list="#thirdTablist" data-tab-content="#thirdTabContent" data-url="contacts" data-offset="0" data-limit="1"  class="menu-element">
                                 <div class="arrow"></div>
                                 <img class="menu-element-icon"
                                      src="/static/content/img/site-01_46.png"/>
@@ -218,59 +218,14 @@
                 </div>
             </nav>
 
+            {% block thirdTabContent %}
             <div class="content-block-inner">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <p class="lead">Пост №1 – это комплекс
-                                военно-патриотических мероприятий для учащихся
-                                образовательных учреждений, расположенных в
-                                городе Красноярске.</p>
-
-                            <p>Подготовка к несению почетной караульной службы
-                                позволяет развить у кандидатов в постовцы
-                                дисциплинированность, терпение, стремление
-                                достигать поставленные перед собой задачи.</p>
-
-                            <p>Перед тем, как заступить в почетный караул,
-                                каждый постовец дает «Торжественное обещание» -
-                                высокий патриотический акт
-                                проявления воли и принятия на себя
-                                ответственности.</p>
-
-                            <p>В почетном карауле участвуют 20 учащихся
-                                ежедневно. Вахта будет длиться 4 часа в течение
-                                одного дня (с 10:00 до 14:00),
-                                со сменами караула через каждые 10-15 минут.
-                                Постовцы обеспечиваются единой униформой в
-                                течение несения Вахты за которую они несут
-                                ответственность.</p>
-                        </div>
-                        <div class="col-xs-6">
-                            <p>Каждый постовец сдает зачет по следующим
-                                дисциплинам: строевая подготовка, Устав
-                                караульной службы и строевой Устав,
-                                сборка-разборка автомата Калашникова.</p>
-
-                            <p>Во время нахождения ребят на Посту №1 с ними
-                                проводится организационная работа. Это
-                                проведение инструктажа по правилам техники
-                                безопасности, и организация несения службы
-                                на Посту №1, тренировочные занятия по строевой
-                                подготовке
-                                и получения обмундирования, что имеет большое
-                                значение для поддержания дисциплины.</p>
-
-                            <p>На Посту №1 проводятся образовательные программы,
-                                встречи с ветеранами участниками боевых
-                                действий, интересными людьми, экскурсий по
-                                местам боевой славы, значимым местам города и
-                                края, бывшими часовыми Поста №1, уроки мужества,
-                                военно-спортивные соревнования.</p>
-                        </div>
-                    </div>
+                <div class="container" id="thirdTabContent">
+                    {% include 'about.html' with object_list=about object_list_offset=about_offset %}
                 </div>
             </div>
+            {% endblock %}
+
 
         </div>
 
