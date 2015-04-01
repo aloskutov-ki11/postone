@@ -4,7 +4,7 @@ from django.db import models
 
 class Slider(models.Model):
     title = models.TextField(verbose_name="Описание изображения")
-    image = models.ImageField(verbose_name="Изображение")
+    image = models.ImageField(verbose_name="Изображение", null=True)
     order = models.IntegerField(blank=True, verbose_name="Порядок в очереди")
 
     def __str__(self):
@@ -37,7 +37,7 @@ class News(models.Model):
 
 class NewsPhotos(models.Model):
     news = models.ForeignKey(News)
-    image = models.ImageField(verbose_name="Фотография")
+    image = models.ImageField(verbose_name="Фотография", null=True)
 
     class Meta:
         verbose_name = "Фотография для новости"
@@ -45,7 +45,7 @@ class NewsPhotos(models.Model):
 
 
 class GalleryPhotos(models.Model):
-    image = models.ImageField(verbose_name="Фотография")
+    image = models.ImageField(verbose_name="Фотография", null=True)
 
     class Meta:
         verbose_name = "Фотография для галереи"

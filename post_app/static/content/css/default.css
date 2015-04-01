@@ -1,0 +1,182 @@
+﻿body {
+  position: relative;
+}
+
+a {
+    text-decoration: underline;
+    -moz-text-decoration-style: dotted;
+    text-decoration-style: dotted;
+}
+
+.carousel-inner > .item > img {
+    width: 100%;
+}
+
+.main-container{
+    padding-top: 60px;
+}
+
+.navbar-top{
+    background-color: #f5f5f5;
+}
+
+.navbar-top .navbar-nav{
+    float: none;
+    margin: 0 auto;
+    display: table;
+}
+
+    /*.navbar-top .navbar-nav li{
+        padding: 0 18px;
+    }*/
+
+    .navbar-top .navbar-nav a {
+        font-size: 13px;
+        font-weight: bold;
+        text-transform: uppercase;
+        color: #364e66;
+
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
+.navbar-top .navbar-nav .active a,
+.navbar-top .navbar-nav .active a:hover{
+    text-decoration: none;
+    color: #ffae00;
+    background-color: transparent;
+}
+
+.navbar-top .static-logo{
+    position: absolute;
+}
+
+.carousel-caption{
+    font-size: 18px;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    padding-bottom: 40px;
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, .5);
+}
+
+.navbar-menu{
+    background-color: #364e66;
+    color: #fff;
+}
+
+.navbar-menu .menu-element {
+    font-size: 18px;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 26px 0;
+    height: 80px;
+    position: relative;
+    cursor: pointer;
+}
+
+.navbar-menu .menu-element > .arrow {
+    display: none;
+
+    border-width: 11px;
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+
+    bottom: -11px;
+    left: 50%;
+    margin-left: -11px;
+    border-top-color: #23384c;
+    border-top-color: #23384c;
+    border-bottom-width: 0;
+}
+
+.navbar-menu .menu-element > .arrow:after{
+    content: "";
+    border-width: 10px;
+
+    bottom: 1px;
+    margin-left: -10px;
+    content: " ";
+    border-top-color: #fff;
+    border-bottom-width: 0;
+}
+
+.navbar-menu .menu-element.active {
+    background-color: #23384c;
+}
+
+.navbar-menu .menu-element.active > .arrow {
+    display: block;
+}
+
+.navbar-menu .menu-element-icon{
+    margin-right: 5px;
+}
+
+.content-block-inner{
+    padding-top: 50px;
+}
+
+.content-block-inner > .container{
+    padding-left: 45px;
+    padding-right: 45px;
+}
+
+.content-block-images{
+    margin-top: 25px;
+}
+
+.content-block-inner h3{
+    margin-top: 0;
+}
+
+.content-block-inner h3 > small{
+    font-size: 13px;
+    color: rgb(160, 160, 160);
+}
+
+.content-block-inner .submenu{
+    text-transform: uppercase;
+    margin-bottom: 25px;
+}
+
+.content-block-inner .submenu a{
+    margin-right: 15px;
+}
+
+.table-schedule > tbody > tr.active > td,
+.table-schedule > tbody > tr.active:hover > td{
+    background-color: #fec13d;
+}
+.table-schedule > tbody > tr.active:hover > td{
+    background-color: #fcad00;
+}
+
+.content-block-inner .lead{
+    color: rgb(54, 78, 102);
+    font-weight: bold;
+}
+
+.footer{
+    color: #fff;
+    background-color: #3b474f;
+    height: 40px;
+}
+
+.footer > span {
+    vertical-align: middle;
+    line-height: 40px;
+}
+
+.widget-weather{
+    text-align: right;
+    color: #fff;
+    padding: 16px 0;
+}
+
+.widget-weather > .date{
+    margin-bottom: 7px;
+}
