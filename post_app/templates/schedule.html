@@ -1,107 +1,22 @@
-
-        <div class="submenu">
-            <a href="#">группа 1</a>
-            <a href="#">группа 1</a>
-        </div>
-
-        <table class="table table-hover table-schedule">
+<div class="submenu">
+    {% for group in guard_groups %}
+        <a data-table-id="#group-table-{{ group.pk }}">{{ group.name }}</a>
+    {% endfor %}
+</div>
+    
+{% for group in guard_groups %}
+        {% if forloop.first %}
+            <table  id="group-table-{{ group.pk }}" class="table table-hover table-schedule">
+        {% else %}
+            <table style="display: none;"  id="group-table-{{ group.pk }}" class="table table-hover table-schedule">
+        {% endif %}
             <tbody>
-            <tr>
-                <td>8:00</td>
-                <td>Прибытие в своё образовательное учреждение</td>
-            </tr>
-            <tr>
-                <td>8:10</td>
-                <td>Завтрак</td>
-            </tr>
-            <tr>
-                <td>8:30</td>
-                <td>Выезд из школы к месту несения службы</td>
-            </tr>
-            <tr>
-                <td>9:30</td>
-                <td>Прибытие в МБОУ СОШ №14</td>
-            </tr>
-            <tr class="active">
-                <td>9:40</td>
-                <td>Построение, медосмотр, инструктаж, вооружение
-                </td>
-            </tr>
-            <tr>
-                <td>9:50</td>
-                <td>Убытие в Караульное помещение МБОУ СОШ №14</td>
-            </tr>
-            <tr>
-                <td>10:00</td>
-                <td>Методическое занятие</td>
-            </tr>
-            <tr>
-                <td>10:40</td>
-                <td>Перерыв</td>
-            </tr>
-            <tr>
-                <td>10:50</td>
-                <td>Методическое занятие</td>
-            </tr>
-            <tr>
-                <td>11:30</td>
-                <td>Обед</td>
-            </tr>
-            <tr>
-                <td>11:50</td>
-                <td>Убытие на Пост №1</td>
-            </tr>
-            <tr>
-                <td>12:00</td>
-                <td>Несение почетной караульной службы; начальная
-                    военная подготовка.
-                </td>
-            </tr>
-            <tr>
-                <td>12:30</td>
-                <td>Несение почетной караульной службы; начальная
-                    военная подготовка.
-                </td>
-            </tr>
-            <tr>
-                <td>12:50</td>
-                <td>Несение почетной караульной службы; начальная
-                    военная подготовка.
-                </td>
-            </tr>
-            <tr>
-                <td>13:30</td>
-                <td>Несение почетной караульной службы; начальная
-                    военная подготовка.
-                </td>
-            </tr>
-            <tr>
-                <td>13:40</td>
-                <td>Несение почетной караульной службы; начальная
-                    военная подготовка.
-                </td>
-            </tr>
-            <tr>
-                <td>14:00</td>
-                <td>Уборка караульного помещения в «Музее «Мемориал
-                    Победы»
-                </td>
-            </tr>
-            <tr>
-                <td>14:00</td>
-                <td>Завершение службы</td>
-            </tr>
-            <tr>
-                <td>14:05</td>
-                <td>Убытие в Караульное помещение МБОУ СОШ №14</td>
-            </tr>
-            <tr>
-                <td>14:20</td>
-                <td>Подведение итогов дня, поверка, разоружение</td>
-            </tr>
-            <tr>
-                <td>14:30</td>
-                <td>Убытие в своё образовательное учреждение</td>
-            </tr>
+                {% for event in group.guardgroupscheduleitem_set.all %}
+                <tr {% if event.is_active %} class="active" {% endif %}  >
+                    <td>{{ event.time|time:"H:i" }}</td>
+                    <td>{{ event.title }}</td>
+                </tr>
+                {% endfor %}
             </tbody>
         </table>
+{% endfor %}

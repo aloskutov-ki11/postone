@@ -1,6 +1,7 @@
 #coding: UTF-8
 from django.views.generic import ListView, TemplateView
 from post_app.models import *
+from datetime import datetime
 
 
 class IndexView(TemplateView):
@@ -25,6 +26,10 @@ class IndexView(TemplateView):
         context['resources_more_button_id'] = 'resources-more-id'
         context['resources_more_button_label'] = u'Ещё ресурсы'
         context['resources_tab_id'] = 'fourth'
+
+        context['cur_time'] = datetime.now().time()
+        context['guard_groups'] = GuardGroup.objects.all()
+
         return context
 
 
@@ -86,3 +91,15 @@ class ResourceView(PaginationMixin, ListView):
     more_button_id = 'resource-more-id'
     more_button_label = u'Ещё ресурсы'
     tab_id = 'fourth'
+
+
+class GuardGroupView(TemplateView):
+    template_name = 'schedule.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(GuardGroupView, self).get_context_data(**kwargs)
+        context['guard_groups'] = GuardGroup.objects.all()
+
+        context['cur_time'] = datetime.now().time()
+
+        return context

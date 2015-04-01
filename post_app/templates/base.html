@@ -55,6 +55,13 @@
             $(tabContent).empty();
         });
     })
+
+    $(document).delegate("div[class*='submenu'] a", 'click', function (e) {
+        var tableId = $(this).data('tableId');
+        $(".table-schedule").hide();
+        $(tableId).show();
+
+    })
     </script>
 
 </head>
@@ -140,7 +147,7 @@
                 <div class="container">
                     <div class="row" id="secondTablist">
                         <div class="col-xs-3">
-                            <div data-tab-list="#secondTablist" data-tab-content="#secondTabContent" data-url="schelude" class="menu-element active">
+                            <div data-tab-list="#secondTablist" data-tab-content="#secondTabContent" data-url="schedule" class="menu-element active">
                                 <div class="arrow"></div>
                                 <img class="menu-element-icon"
                                      src="/static/content/img/site-01_25.png"/>
@@ -221,7 +228,7 @@
             {% block thirdTabContent %}
             <div class="content-block-inner">
                 <div class="container" id="thirdTabContent">
-                    {% include 'about.html' with object_list=about object_list_offset=about_offset %}
+                    {% include 'about.html' %}
                 </div>
             </div>
             {% endblock %}

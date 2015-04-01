@@ -173,6 +173,7 @@ class GuardGroupScheduleItem(models.Model):
     class Meta:
         verbose_name = "Событие"
         verbose_name_plural = "События"
+        ordering = ['time']
 
 
 class Person(models.Model):
