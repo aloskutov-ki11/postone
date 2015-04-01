@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from adminsortable.models import Sortable
+from django.dispatch import receiver
+import os
+from django.db.models.signals import pre_save, post_save, pre_delete
 
 
 class Slider(Sortable):
@@ -94,3 +97,105 @@ class Review(models.Model):
     class Meta:
         verbose_name = "Отзыв"
         verbose_name_plural = "Отзывы"
+
+
+class Document(models.Model):
+    name = models.CharField(max_length=256, verbose_name="Название документа", blank=True)
+    description = models.TextField(verbose_name="Описание документа", blank=True)
+    document = models.FileField(verbose_name="Документ")
+
+    def __str__(self):
+        return self.name
+
+    def __unicode__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "Документ"
+        verbose_name_plural = "Документы"
+
+
+class Resource(models.Model):
+    url = models.CharField(max_length=256, verbose_name="Ссылка на ресурс")
+    description = models.CharField(max_length=256, verbose_name="Описание ресурса", blank=True)
+
+    def __str__(self):
+        return self.url
+
+    def __unicode__(self):
+        return self.url
+
+    class Meta:
+        verbose_name = "Ресурс"
+        verbose_name_plural = "Ресурсы"
+
+
+#-------------------------------------------------------------------------------
+class Reward(models.Model):
+    name = models.CharField(max_length=256, verbose_name="Название награды")
+
+    def __str__(self):
+        return self.name
+
+    def __unicode__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "Награда"
+        verbose_name_plural = "Награды"
+
+
+class GuardGroup(models.Model):
+    name = models.CharField(max_length=256, verbose_name="Название группы")
+
+    def __str__(self):
+        return self.name
+
+    def __unicode__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "Группа"
+        verbose_name_plural = "Группы"
+
+
+class GuardGroupScheduleItem(models.Model):
+    title = models.CharField(max_length=256, verbose_name="Событие")
+    time = models.TimeField(verbose_name="Время начала")
+    group = models.ForeignKey(GuardGroup, verbose_name="Группа")
+
+    def __str__(self):
+        return self.title
+
+    def __unicode__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = "Событие"
+        verbose_name_plural = "События"
+
+
+class Person(models.Model):
+    fio = models.CharField(max_length=256, verbose_name="ФИО")
+    school = models.CharField(max_length=256, verbose_name="Школа")
+    photo = models.ImageField(verbose_name="Фотография", blank=True)
+    rewards = models.ManyToManyField(Reward, verbose_name="Награды", blank=True, null=True)
+    group = models.ForeignKey(GuardGroup, verbose_name="Группа", blank=True, null=True)
+
+    def __str__(self):
+        return self.fio
+
+    def __unicode__(self):
+        return self.fio
+
+    class Meta:
+        verbose_name = "Постовец"
+        verbose_name_plural = "Постовцы"
+
+
+
+
+@receiver(pre_save, sender=Document)
+def set_document_name(sender, instance, **kwargs):
+    if not instance.name:
+         instance.name = os.path.basename(instance.document.name)

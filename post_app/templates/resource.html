@@ -1,0 +1,6 @@
+{% extends 'pagination.html' %}
+{% load staticfiles %}
+{% load thumbnail %}
+{% block list_item %}
+     <p><a href="{{cur_object.document.url }}">{{cur_object.url }}</a> - {{cur_object.description }}</p>
+{% endblock %}

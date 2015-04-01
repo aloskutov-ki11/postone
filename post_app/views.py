@@ -1,6 +1,6 @@
 #coding: UTF-8
 from django.views.generic import ListView, TemplateView
-from post_app.models import Slider, News
+from post_app.models import *
 
 
 class IndexView(TemplateView):
@@ -18,6 +18,13 @@ class IndexView(TemplateView):
         context['news_more_button_label'] = u'Ещё новости'
         context['news_tab_id'] = 'first'
 
+        context['resources'] = Resource.objects.all()[:1]
+        context['resources_offset'] = 1
+        context['resources_list_limit'] = 1
+        context['resources_url'] = 'resource'
+        context['resources_more_button_id'] = 'resources-more-id'
+        context['resources_more_button_label'] = u'Ещё ресурсы'
+        context['resources_tab_id'] = 'fourth'
         return context
 
 
@@ -41,9 +48,9 @@ class PaginationMixin(object):
         context['data_url'] = self.data_url
         context['more_button_id'] = self.more_button_id
         context['more_button_label'] = self.more_button_label
-        context['tab_id'] = 'first'
+        context['tab_id'] = self.tab_id
 
-        if self.offset and self.limit:
+        if self.offset != None and self.limit != None:
             context['object_list_offset'] = self.offset + self.limit
         else:
             context['object_list_offset'] = 0
@@ -58,4 +65,24 @@ class NewsView(PaginationMixin, ListView):
     default_list_limit = 1
     more_button_id = 'news-more-id'
     more_button_label = u'Ещё новости'
-    tab_id = 'First'
+    tab_id = 'first'
+
+
+class DocumentView(PaginationMixin, ListView):
+    template_name = 'document.html'
+    model = Document
+    data_url = 'document'
+    default_list_limit = 1
+    more_button_id = 'document-more-id'
+    more_button_label = u'Ещё документы'
+    tab_id = 'third'
+
+
+class ResourceView(PaginationMixin, ListView):
+    template_name = 'resource.html'
+    model = Resource
+    data_url = 'resource'
+    default_list_limit = 1
+    more_button_id = 'resource-more-id'
+    more_button_label = u'Ещё ресурсы'
+    tab_id = 'fourth'

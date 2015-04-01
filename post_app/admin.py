@@ -44,11 +44,38 @@ class SliderAdminClass(SortableAdmin):
     readonly_fields = ('image_big_preview',)
 
 
+class GuardGroupScheduleItemInline(admin.TabularInline):
+    model = GuardGroupScheduleItem
+    extra = 12
+
+    fieldsets = [
+        ('Событие', {'fields': ['title']}),
+        ('Время начала', {'fields': ['time']}),
+    ]
+
+
+class GuardGroupAdminClass(admin.ModelAdmin):
+    list_display = ('name',)
+
+    fieldsets = [
+        ('Название группы', {'fields': ['name']}),
+    ]
+
+    inlines = [GuardGroupScheduleItemInline]
+
+
 admin.site.register(GalleryPhotos)
 admin.site.register(News, NewsAdminClass)
+admin.site.register(GuardGroup, GuardGroupAdminClass)
 admin.site.register(Slider, SliderAdminClass)
 admin.site.register(Translation)
 admin.site.register(Review, ReviewAdminClass)
+
+admin.site.register(Document)
+admin.site.register(Resource)
+
+admin.site.register(Person)
+admin.site.register(Reward)
 
 admin.site.unregister(User)
 admin.site.unregister(Group)

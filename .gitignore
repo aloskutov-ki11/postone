@@ -62,7 +62,6 @@ target/
 media/
 *~
 *_local*
-migrations/
 staticfiles/
 *.ini
 *.conf

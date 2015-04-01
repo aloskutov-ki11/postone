@@ -199,7 +199,7 @@
                             </div>
                         </div>
                         <div class="col-xs-4">
-                            <div data-tab-list="#thirdTablist" data-tab-content="#thirdTabContent" data-url="documents" data-offset="0" data-limit="1" class="menu-element">
+                            <div data-tab-list="#thirdTablist" data-tab-content="#thirdTabContent" data-url="document" data-offset="0" data-limit="1" class="menu-element">
                                 <div class="arrow"></div>
                                 <img class="menu-element-icon"
                                      src="/static/content/img/site-01_41.png"/>
@@ -243,38 +243,15 @@
                 </div>
             </nav>
 
+            {% block fourthTabContent %}
             <div class="content-block-inner">
-                <div class="container">
-                    <p><a href="www.pensiya.ru">www.pensiya.ru</a> - удобный и
-                        быстрый рассчет будущей пенсии</p>
-
-                    <p><a href="www.kommunalka.ru">www.kommunalka.ru</a> -
-                        оплата любым коммунальных платежей через Интернет</p>
-
-                    <p><a href="www.pensiya.ru">www.pensiya.ru</a> - удобный и
-                        быстрый рассчет будущей пенсии</p>
-
-                    <p><a href="www.kommunalka.ru">www.kommunalka.ru</a> -
-                        оплата любым коммунальных платежей через Интернет</p>
-
-                    <p><a href="www.pensiya.ru">www.pensiya.ru</a> - удобный и
-                        быстрый рассчет будущей пенсии</p>
-
-                    <p><a href="www.kommunalka.ru">www.kommunalka.ru</a> -
-                        оплата любым коммунальных платежей через Интернет</p>
-
-                    <p><a href="www.pensiya.ru">www.pensiya.ru</a> - удобный и
-                        быстрый рассчет будущей пенсии</p>
-
-                    <p><a href="www.kommunalka.ru">www.kommunalka.ru</a> -
-                        оплата любым коммунальных платежей через Интернет</p>
-
-                    <p class="text-center">
-                        <a href="#">Посмотреть еще <span
-                                class="caret"></span></a>
-                    </p>
+                <div class="container" id="fourthTabContent">
+                    {% include 'resource.html' with object_list=resources object_list_offset=resources_offset data_url=resources_url default_list_limit=resources_list_limit more_button_id=resources_more_button_id more_button_label=resources_more_button_label tab_id=resources_tab_id%}
                 </div>
             </div>
+            {% endblock %}
+
+
 
         </div>
 
