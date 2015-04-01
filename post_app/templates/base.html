@@ -1,4 +1,5 @@
-﻿{% load staticfiles %}
+﻿
+{% load staticfiles %}
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -14,35 +15,50 @@
 
     <script>
     $( document ).ready(function() {
-        $('#firstTablist div div').click(function (e) {
-            $("#firstTablist div div[class*='menu-element active']").removeClass("active");
+
+        $("div[class*='row'] div[class*='col-xs-3'] div[class*='menu-element']").click(function (e) {
+
+            var TabList = $(this).data('tabList');
+            var tabContent = $(this).data('tabContent');
+            var url = $(this).data('url');
+            var offset = $(this).data('offset');
+            var limit = $(this).data('limit');
+
+            $(TabList+" div div[class*='menu-element active']").removeClass("active");
             $(this).addClass("active");
 
+            var list = $.get( "/" + url + "/?offset=" + offset + "&limit=" + limit);
 
-            var news = $.post( "example.php")
-
-            news.done(function( data ) {
-                $("#firstTabContent").empty().append( data );
+            list.done(function( data ) {
+                $(tabContent).empty().append( data );
             });
-            news.fail(function(  ) {
-                 alert("fail");
+            list.fail(function(  ) {
+                 $(tabContent).empty();
             });
         })
 
+
+
     });
 
-    function LoadMore(TabContent, LinkMore, url, offset, limit) {
-        var list = $.get( "/" + url + "/?offset=" + offset + "&limit=" + limit);
+               $(document).delegate("p[class*='text-center'] a", 'click', function (e) {
 
-        list.done(function( data ) {
-            $(TabContent).append(data);
-            $(LinkMore).remove();
-        });
-        list.fail(function(  ) {
-              alert("fail");
-        });
-    }
+                    var tabContent = $(this).data('tabContent');
+                    var linkMore = $(this).data('linkMore');
+                    var url = $(this).data('url');
+                    var offset = $(this).data('offset');
+                    var limit = $(this).data('limit');
 
+                    var list = $.get( "/" + url + "/?offset=" + offset + "&limit=" + limit);
+                    //alert("s");
+                    list.done(function( data ) {
+                        $(tabContent).append( data );
+                        $(linkMore).remove();
+                    });
+                    list.fail(function(  ) {
+                         $(tabContent).empty();
+                    });
+                })
     </script>
 
 </head>
@@ -80,7 +96,7 @@
             <div class="container">
                 <div class="row" id="firstTablist">
                     <div class="col-xs-3">
-                        <div class="menu-element active">
+                        <div data-tab-list="#firstTablist" data-tab-content="#firstTabContent" data-url="news" data-offset="0" data-limit="1" class="menu-element active">
                             <div class="arrow"></div>
                             <img class="menu-element-icon"
                                  src="/static/content/img/site-01_15.png"/>
@@ -88,7 +104,7 @@
                         </div>
                     </div>
                     <div class="col-xs-3">
-                        <div class="menu-element">
+                        <div data-tab-list="#firstTablist" data-tab-content="#firstTabContent" data-url="gallery" data-offset="0" data-limit="10" class="menu-element">
                             <div class="arrow"></div>
                             <img class="menu-element-icon"
                                  src="/static/content/img/site-01_09.png"/>
@@ -96,7 +112,7 @@
                         </div>
                     </div>
                     <div class="col-xs-3">
-                        <div class="menu-element">
+                        <div data-tab-list="#firstTablist" data-tab-content="#firstTabContent" data-url="translation" data-offset="0" data-limit="1" class="menu-element">
                             <div class="arrow"></div>
                             <img class="menu-element-icon"
                                  src="/static/content/img/site-01_12.png"/>
@@ -104,7 +120,7 @@
                         </div>
                     </div>
                     <div class="col-xs-3">
-                        <div class="menu-element">
+                        <div data-tab-list="#firstTablist" data-tab-content="#firstTabContent" data-url="reviews" data-offset="0" data-limit="3" class="menu-element">
                             <div class="arrow"></div>
                             <img class="menu-element-icon"
                                  src="/static/content/img/site-01_06.png"/>

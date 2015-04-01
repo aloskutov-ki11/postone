@@ -20,10 +20,8 @@
     </div>
     {% if forloop.last %}
     <p id="news-link-more" class="text-center">
-        <a OnClick="LoadMore('#firstTabContent', '#news-link-more', 'news', {{ object_list_offset }}, 1);">Еще
+        <a data-tab-content="#firstTabContent" data-link-more="#news-link-more" data-url="{{ data_utl }}" data-offset="{{ object_list_offset }}" data-limit="{{ object_list_offset }}">Еще
             новости <span class="caret"></span></a>
     </p>
     {% endif %}
-    {% empty %}
-    <h2>Новостей больше нет</h2>
 {% endfor %}
