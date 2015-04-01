@@ -2,6 +2,7 @@
 from django.contrib import admin
 from post_app.models import *
 from django.contrib.auth.models import Group, User
+from adminsortable.admin import SortableAdmin
 
 
 class PhotosNewsInline(admin.TabularInline):
@@ -38,8 +39,9 @@ class ReviewAdminClass(admin.ModelAdmin):
     ]
 
 
-class SliderAdminClass(admin.ModelAdmin):
-    list_display = ('title', 'image', 'order')
+class SliderAdminClass(SortableAdmin):
+    list_display = ('title', 'image_small_preview', 'order')
+    readonly_fields = ('image_big_preview',)
 
 
 admin.site.register(GalleryPhotos)

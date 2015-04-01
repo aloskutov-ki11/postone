@@ -29,9 +29,11 @@ class PaginationMixin(object):
 
     def get_context_data(self, **kwargs):
         context = super(PaginationMixin, self).get_context_data(**kwargs)
-        context[self.context_object_name] = self.get_queryset()
+        context['object_list_offset'] = self.default_list_limit
         if self.offset and self.limit:
             context['object_list_offset'] = self.offset + self.limit
+        else:
+            context['object_list_offset'] = 0
 
         return context
 
@@ -39,3 +41,5 @@ class PaginationMixin(object):
 class NewsView(PaginationMixin, ListView):
     template_name = 'news.html'
     model = News
+    data_url = 'news'
+    default_list_limit = 1

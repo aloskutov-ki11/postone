@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from adminsortable.models import Sortable
 
 
-class Slider(models.Model):
+class Slider(Sortable):
     title = models.TextField(verbose_name="Описание изображения")
     image = models.ImageField(verbose_name="Изображение", null=True)
-    order = models.IntegerField(blank=True, verbose_name="Порядок в очереди")
 
     def __str__(self):
         return self.title
@@ -13,7 +13,21 @@ class Slider(models.Model):
     def __unicode__(self):
         return self.title
 
-    class Meta:
+    def image_small_preview(self):
+        return u'<img src="{}" width="100"/>'.format(
+            self.image.url)
+
+    image_small_preview.short_description = u'Изображение'
+    image_small_preview.allow_tags = True
+
+    def image_big_preview(self):
+        return u'<img src="{}" width="400"/>'.format(
+            self.image.url)
+
+    image_big_preview.short_description = u'Просмотр'
+    image_big_preview.allow_tags = True
+
+    class Meta(Sortable.Meta):
         verbose_name = "Изображение для слайдера"
         verbose_name_plural = "Изображения для слайдера"
 

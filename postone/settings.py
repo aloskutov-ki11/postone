@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'sorl.thumbnail',
     'post_app',
+    'adminsortable',
 )
 
 MIDDLEWARE_CLASSES = (
