@@ -173,7 +173,7 @@ class GuardGroupScheduleItem(models.Model):
                                                     group=self.group).reverse()[0]
         except IndexError:
             # на случай между 00:00 и первым событием
-            cur = GuardGroupScheduleItem.objects.filter(group=self.group)[0]
+            return False
         return self == cur
 
     def __str__(self):

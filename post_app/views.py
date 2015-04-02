@@ -1,7 +1,6 @@
-#coding: UTF-8
+# coding: UTF-8
 from django.views.generic import ListView, TemplateView
 from post_app.models import *
-from datetime import datetime
 
 
 class IndexView(TemplateView):
